@@ -1,8 +1,8 @@
 FROM centos:8
 
-RUN yum install epel-release && \
-    yum install ocserv && \
-    yum install iptables
+RUN yum install -y epel-release && \
+    yum install -y ocserv && \
+    yum install -y iptables
 
 COPY entrypoint.sh /entrypoint.sh
 COPY ocserv.conf /etc/ocserv/ocserv.conf
