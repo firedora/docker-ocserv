@@ -47,9 +47,9 @@ function main() {
     fi
 
     case $1 in
-        create)
+        add)
             shift
-            create_user $@
+            add_user $@
             ;;
         list)
             list_users
