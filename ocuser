@@ -17,7 +17,7 @@ function add_user() {
         usage
     fi
 
-    certtool --generate-privkey --outfile $1.key
+    certtool --generate-privkey --outfile /etc/pki/ocserv/private/$1.key
     cat << EOF > user.tmpl
 cn = "AnyConnect VPN User"
 unit = "admins"
