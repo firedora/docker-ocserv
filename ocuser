@@ -13,7 +13,7 @@ HEREDOC
 
 function add_user() {
     
-    if [ $# -ne 1]; then
+    if [ $# -ne 1 ]; then
         usage
     fi
 
