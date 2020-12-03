@@ -2,7 +2,8 @@ FROM centos:8
 
 RUN yum install -y epel-release && \
     yum install -y ocserv && \
-    yum install -y iptables
+    yum install -y iptables && \
+    yum install -y openssl
 
 ADD ./ocuser /usr/local/bin
 RUN chmod a+x /usr/local/bin/ocuser
