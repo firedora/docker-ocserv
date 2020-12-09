@@ -2,7 +2,7 @@ FROM centos:8
 
 RUN yum install -y epel-release && \
     yum install -y ocserv && \
-    yum install -y gnutls && \
+    yum install -y gnutls-utils && \
     yum install -y iptables
 
 ADD ./ocuser /usr/local/bin
