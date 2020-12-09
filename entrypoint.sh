@@ -55,7 +55,7 @@ function generate_certs() {
 
 		CA_CN="OpenConnect VPN CA"
 		CA_ORG="Haitun"
-		SERVER_CN="Taro"
+		SERVER_CN="OpenConnect VPN Server"
 		SERVER_DOMAIN="www.haitun.io"
 		SERVER_ORG="Haitun"
 
