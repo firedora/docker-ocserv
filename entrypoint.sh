@@ -76,6 +76,7 @@ function main() {
 	setup_color
 	generate_certs
 	system_config
+	exec "$@"
 }
 
 main "$@"
