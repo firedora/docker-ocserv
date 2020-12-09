@@ -1,0 +1,66 @@
+#!/bin/sh
+
+function usage() {
+   cat << HEREDOC
+
+   Usage:
+      ocuser add [username]
+      ocuser list
+      ocuser remove [username]
+
+HEREDOC
+}
+
+function add_user() {
+    
+    if [ $# -ne 1 ]; then
+        usage
+    fi
+
+    mkdir -p /etc/pki/ocserv/users/$1
+    cd /etc/pki/ocserv/users/$1
+
+    certtool --generate-privkey --outfile user.key
+    cat << EOF > user.tmpl
+cn = "AnyConnect VPN User"
+uid = "$1"
+unit = "admins"
+expiration_days = 365
+signing_key
+tls_www_client
+EOF
+    certtool --generate-certificate --load-privkey user.key --load-ca-certificate /etc/pki/ocserv/cacerts/ca.crt --load-ca-privkey /etc/pki/ocserv/cacerts/ca.key --template user.tmpl --outfile user.crt
+    certtool --to-p12 --load-privkey user.key --pkcs-cipher 3des-pkcs12 --load-certificate user.crt --outfile user.p12 --outder
+}
+
+function list_users() {
+    echo "Not implemented."
+}
+
+function remove_user() {
+    echo "Not implemented."
+}
+
+function main() {
+
+    if [ $# -lt 1 ]; then
+        usage
+        exit 1
+    fi
+
+    case $1 in
+        add)
+            shift
+            add_user $@
+            ;;
+        list)
+            list_users
+            ;;
+        remove)
+            shift
+            remove_user $@
+            ;;
+    esac
+}
+
+main "$@"
