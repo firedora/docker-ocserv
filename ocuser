@@ -17,7 +17,10 @@ function add_user() {
         usage
     fi
 
-    certtool --generate-privkey --outfile /etc/pki/ocserv/private/$1.key
+    mkdir -p /etc/pki/ocserv/users/$1
+    cd /etc/pki/ocserv/users/$1
+
+    certtool --generate-privkey --outfile user.key
     cat << EOF > user.tmpl
 cn = "AnyConnect VPN User"
 unit = "admins"
@@ -25,8 +28,8 @@ expiration_days = 365
 signing_key
 tls_www_client
 EOF
-    certtool --generate-certificate --load-privkey /etc/pki/ocserv/private/$1.key --load-ca-certificate /etc/pki/ocserv/cacerts/ca.crt --load-ca-privkey /etc/pki/ocserv/cacerts/ca.key --template user.tmpl --outfile /etc/pki/ocserv/public/$1.crt
-    certtool --to-p12 --load-privkey /etc/pki/ocserv/private/$1.key --pkcs-cipher 3des-pkcs12 --load-certificate /etc/pki/ocserv/public/$1.crt --outfile /tmp/$1.p12 --outder
+    certtool --generate-certificate --load-privkey user.key --load-ca-certificate /etc/pki/ocserv/cacerts/ca.crt --load-ca-privkey /etc/pki/ocserv/cacerts/ca.key --template user.tmpl --outfile user.crt
+    certtool --to-p12 --load-privkey user.key --pkcs-cipher 3des-pkcs12 --load-certificate user.crt --outfile user.p12 --outder
 }
 
 function list_users() {
