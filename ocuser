@@ -23,6 +23,7 @@ function add_user() {
     certtool --generate-privkey --outfile user.key
     cat << EOF > user.tmpl
 cn = "AnyConnect VPN User"
+uid = "$1"
 unit = "admins"
 expiration_days = 365
 signing_key
